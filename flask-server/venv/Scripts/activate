@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\0707b\Documents\Projects\FlaskWithReact\flask-server\venv"
+VIRTUAL_ENV="C:\Users\jelly\Documents\Python Files\Web Scraper Project\Web-Scraper\flask-server\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

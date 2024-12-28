@@ -4,15 +4,21 @@ function App() {
 
   const [data, setData] = useState([{}])
 
+  // useEffect(() => {
+  //   fetch("http://localhost:5000/members").then(
+  //     res => res.json()
+  //   ).then(
+  //     data => {
+  //       setData(data)
+  //       console.log(data)
+  //     }
+  //   )
+  // }, [])
   useEffect(() => {
-    fetch("http://localhost:5000/members").then(
-      res => res.json()
-    ).then(
-      data => {
-        setData(data)
-        console.log(data)
-      }
-    )
+    fetch("http://localhost:5000/members")
+      .then((res) => res.json())
+      .then((data) => setData(data))
+      .catch((error) => console.error("Error fetching members:", error));
   }, [])
 
   return (
