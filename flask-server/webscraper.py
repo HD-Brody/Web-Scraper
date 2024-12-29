@@ -1,15 +1,20 @@
 from bs4 import BeautifulSoup
+from selenium import webdriver
 import requests
 import server
 
 def getURL(job, location):
-    # page_to_scrape = requests.get(f"https://ca.indeed.com/jobs?q={job}&l={location}&from=searchOnDesktopSerp&vjk=1e98bc5a83ef3d73")
     job = job.lower().replace(' ', '+')
-    return f"https://ca.indeed.com/jobs?q={job}&l={location}&from=searchOnDesktopSerp&vjk=1e98bc5a83ef3d73"
+    return f"https://ca.indeed.com/jobs?q={job}&l={location}&lang=en&vjk=6d5da51715f620dc"
 
+def scrapePage(url):
+    driver = webdriver.Chrome()
+    driver.get(url)
 
-# job = input('Enter a job title: ').lower().replace(' ', '+')
-# location = input('Enter your location: ').lower().replace(' ', '+')
+    soup = BeautifulSoup(driver.page_source, "html.parser")
 
-# page_to_scrape = requests.get(f"https://ca.indeed.com/jobs?q={job}&l={location}&from=searchOnDesktopSerp&vjk=1e98bc5a83ef3d73")
-# print(f"https://ca.indeed.com/jobs?q={job}&l={location}&from=searchOnDesktopSerp&vjk=1e98bc5a83ef3d73")
+    job_titles = soup.find_all('a', class_='jcs-JobTitle')
+    companies = soup.find_all('span', class_='css-1h7lukg')
+    driver.quit()
+
+    return job_titles, companies

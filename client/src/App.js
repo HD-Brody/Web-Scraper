@@ -55,6 +55,15 @@ function App() {
       <button onClick={click}>
         Search
       </button>
+
+
+      {(typeof data.members === 'undefined') ? (
+        <p>Loading...</p>
+      ) : (
+        data.members.map((member, i) => (
+          <p key={i}>{member}</p>
+        ))
+      )}
     </div>
   )
 }

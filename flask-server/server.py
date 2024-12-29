@@ -19,6 +19,8 @@ def submit():
 
     url = getURL(job_input, location_input)
 
+    job_titles, companies = scrapePage(url)
+
     print(f"Received from frontend: {data}")  # Debugging: Log data to console
     return jsonify({
         "received": url,
