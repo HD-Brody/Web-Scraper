@@ -13,8 +13,8 @@ def scrapePage(url):
 
     soup = BeautifulSoup(driver.page_source, "html.parser")
 
-    job_titles = soup.find_all('a', class_='jcs-JobTitle')
-    companies = soup.find_all('span', class_='css-1h7lukg')
+    job_titles = [job.text.strip() for job in soup.find_all('a', class_='jcs-JobTitle')]
+    companies = [company.text.strip() for company in soup.find_all('span', class_='css-1h7lukg')]
     driver.quit()
 
     return job_titles, companies

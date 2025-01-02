@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react' 
 
 function App() {
+  // State for job input, location input, and fetched job/company data
+  const [data, setData] = useState([]) 
+  const [job, setJob] = useState('') 
+  const [location, setLocation] = useState('') 
 
-  const [data, setData] = useState([{}])
-  const [job, setJob] = useState('')
-  const [location, setLocation] = useState('')
-
-  useEffect(() => {
-    fetch("http://localhost:5000/members")
-      .then((res) => res.json())
-      .then((data) => setData(data))
-      .catch((error) => console.error("Error fetching members:", error));
-  }, [])
-
+  // Fetch job titles and companies when the search button is clicked
   const click = () => {
     fetch("http://localhost:5000/submit", {
       method: "POST",
@@ -26,46 +20,40 @@ function App() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Response from server:", data);
-        alert(`Server received: ${data.received}`);
+        console.log("Response from server:", data) 
+        setData(data.jobs_and_companies)  // Update state with job and company data
       })
-      .catch((error) => console.error("Error sending data:", error));
-  }
+      .catch((error) => console.error("Error sending data:", error)) 
+  } 
 
-  const changeJobVal = event => {
-    setJob(event.target.value); // Fix: Use event.target.value
-  }
+  // Input change handlers
+  const changeJobVal = (event) => setJob(event.target.value) 
+  const changeLocationVal = (event) => setLocation(event.target.value) 
 
-  const changeLocationVal = event => {
-    setLocation(event.target.value); // Fix: Use event.target.value
-  }
-
+  // Render the UI
   return (
     <div className='App'>
-      <p>
-        Enter job title: 
-      </p>
+      <p>Enter job title:</p>
       <input onChange={changeJobVal} value={job} />
 
-      <p>
-        Enter location:
-      </p>
+      <p>Enter location:</p>
       <input onChange={changeLocationVal} value={location} />
 
-      <button onClick={click}>
-        Search
-      </button>
+      <button onClick={click}>Search</button>
 
-
-      {(typeof data.members === 'undefined') ? (
-        <p>Loading...</p>
+      {/* Display job titles and companies */}
+      {data.length === 0 ? (
+        <p>No results yet. Submit a search!</p>
       ) : (
-        data.members.map((member, i) => (
-          <p key={i}>{member}</p>
+        data.map((entry, i) => (
+          <div key={i}>
+            <p><strong>Job Title:</strong> {entry.job_title}</p>
+            <p><strong>Company:</strong> {entry.company}<br /></p>
+          </div>
         ))
       )}
     </div>
-  )
+  ) 
 }
 
-export default App;
+export default App 
