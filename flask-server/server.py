@@ -14,12 +14,12 @@ def submit():
 
     url = getURL(job_input, location_input)
 
-    job_titles, companies = scrapePage(url)
+    job_titles, companies, urls = scrapePage(url)
 
     print(f"Received from frontend: {len(job_titles)}")  # Debugging: Log data to console
     return jsonify({
         "received": url,
-        "jobs_and_companies": [{"job_title": job, "company": company} for job, company in zip(job_titles, companies)]
+        "jobs_and_companies": [{"job_title": job, "company": company, 'url': url} for job, company, url in zip(job_titles, companies, urls)]
     })  # Send back a response
 
 @app.route("/test")

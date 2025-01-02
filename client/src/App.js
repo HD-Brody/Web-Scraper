@@ -47,8 +47,8 @@ function App() {
       ) : (
         data.map((entry, i) => (
           <div key={i}>
-            <p><strong>Job Title:</strong> {entry.job_title}</p>
-            <p><strong>Company:</strong> {entry.company}<br /></p>
+            <p><strong>Job Title:</strong> <a href={entry.url} target="_blank">{entry.job_title}</a></p>
+            <p><strong>Company:</strong> {entry.company}</p>
           </div>
         ))
       )}

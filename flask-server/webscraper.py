@@ -14,7 +14,9 @@ def scrapePage(url):
     soup = BeautifulSoup(driver.page_source, "html.parser")
 
     job_titles = [job.text.strip() for job in soup.find_all('a', class_='jcs-JobTitle')]
+    urls = [job.get('href') for job in soup.find_all('a', class_='jcs-JobTitle')]
+    urls = [f"https://ca.indeed.com{url}" for url in urls]
     companies = [company.text.strip() for company in soup.find_all('span', class_='css-1h7lukg')]
     driver.quit()
 
-    return job_titles, companies
+    return job_titles, companies, urls
